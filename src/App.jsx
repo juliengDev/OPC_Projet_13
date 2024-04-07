@@ -1,5 +1,11 @@
+import HomepageLayout from "./features/homepage/HomepageLayout";
+
 function App() {
-  return <h1>Argent Bank</h1>;
+  return (
+    <>
+      <HomepageLayout />
+    </>
+  );
 }
 
 export default App;
