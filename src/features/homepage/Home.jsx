@@ -1,14 +1,20 @@
-import styled from "styled-components";
+// import styled from "styled-components";
 
-const NAV = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 20px;
-`;
-function HomepageLayout() {
-  return (
-    <>
+// const NAV = styled.nav`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 5px 20px;
+// `;
+
+function Home() {
+  return <div>HOME</div>;
+}
+
+export default Home;
+
+{
+  /* <>
       <NAV>
         <a class="main-nav-logo" href="./index.html">
           <img
@@ -78,8 +84,5 @@ function HomepageLayout() {
       <footer class="footer">
         <p class="footer-text">Copyright 2020 Argent Bank</p>
       </footer>
-    </>
-  );
+    </> */
 }
-
-export default HomepageLayout;
