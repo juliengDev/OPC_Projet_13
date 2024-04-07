@@ -13,6 +13,17 @@ body {
   min-height: 100vh;
 }
 
+a {
+  text-decoration: none; /* Supprimer la soulignement par défaut */
+  color: inherit; /* Utiliser la couleur par défaut du texte */
+  cursor: pointer; /* Définir le curseur par défaut */
+}
+
+/* Style des liens anchor au survol */
+a:hover {
+  text-decoration: underline; /* Souligner au survol */
+}
+
 .main {
   flex: 1;
 }
@@ -71,7 +82,7 @@ body {
 }
 
 .hero {
-  background-image: url('../img/bank-tree.jpeg');
+  background-image: url("../img/bank-tree.jpeg");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
