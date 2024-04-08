@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Hero = styled.div`
   // .hero
-  background-image: url("../../asset/img/bank-tree.jpeg");
+  background-image: url("./src/assets/img/bank-tree.jpeg");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -99,7 +99,7 @@ const H3 = styled.h3`
 
 function Home() {
   return (
-    <>
+    <main>
       <Hero>
         <HeroContent>
           <H2>Promoted Content</H2>
@@ -138,7 +138,7 @@ function Home() {
           </p>
         </FeatureItem>
       </Features>
-    </>
+    </main>
   );
 }
 
