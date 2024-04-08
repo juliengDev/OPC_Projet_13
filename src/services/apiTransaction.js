@@ -1,4 +1,4 @@
-const API_URL = "https://argentbank.com/api";
+const API_URL = "localhost:3001/api/v1";
 
 export async function getTransactions(transactionId) {
   const res = await fetch(`${API_URL}/transaction/${transactionId}`);

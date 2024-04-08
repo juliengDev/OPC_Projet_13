@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import HeroImg from "/src/assets/img/bank-tree.jpeg";
 
 const Hero = styled.div`
   // .hero
-  background-image: url("./src/assets/img/bank-tree.jpeg");
+  background-image: url(${HeroImg});
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;

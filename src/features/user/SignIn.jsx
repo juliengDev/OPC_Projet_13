@@ -43,6 +43,7 @@ const Input = styled.input`
 const InputRemember = styled.div`
   // .input-remember
   margin-left: 0.25rem;
+  display: flex;
 `;
 const LabelRemember = styled.label`
   // .input-remember label

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useLoaderData } from "react-router-dom";
 import Account from "./Account";
 
 const Main = styled.main`
@@ -32,6 +33,8 @@ const H2 = styled.h2`
 `;
 
 function Profil() {
+  const token = useLoaderData();
+  console.log(token);
   return (
     <Main>
       <Header>

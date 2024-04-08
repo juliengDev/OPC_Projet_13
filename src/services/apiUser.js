@@ -1,4 +1,24 @@
-const API_URL = "https://argentbank.com/api";
+const API_URL = "http://localhost:3001/api/v1";
+
+export async function getToken(userObj) {
+  try {
+    const res = await fetch(`${API_URL}/user/login`, {
+      method: "POST",
+      body: JSON.stringify(userObj),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const token = data.body.token;
+    return token;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to authenticate");
+  }
+}
 
 export async function getUser(userId) {
   const res = await fetch(`${API_URL}/${userId}`);
