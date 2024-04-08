@@ -14,14 +14,13 @@ body {
 }
 
 a {
-  text-decoration: none; /* Supprimer la soulignement par défaut */
-  color: inherit; /* Utiliser la couleur par défaut du texte */
-  cursor: pointer; /* Définir le curseur par défaut */
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
-/* Style des liens anchor au survol */
 a:hover {
-  text-decoration: underline; /* Souligner au survol */
+  text-decoration: underline;
 }
 
 .main {

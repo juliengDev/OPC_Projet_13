@@ -28,8 +28,7 @@ const Nav = styled.nav`
   align-items: center;
   padding: 5px 20px;
 `;
-
-const NavItem = styled.a`
+const NavItem = styled.div`
   // .main-nav a
   // .main-nav-item
   font-weight: bold;
@@ -37,11 +36,11 @@ const NavItem = styled.a`
   text-decoration: none;
   margin-right: 0.5rem;
 `;
-
 const Icon = styled.i`
   font-size: 1.2em;
   margin-right: 0.5rem;
 `;
+
 function Logo() {
   return (
     <>
@@ -56,12 +55,10 @@ function Logo() {
 
 function SignIn() {
   return (
-    <div>
-      <NavItem class="main-nav-item">
-        <Icon className="fa fa-user-circle" />
-        Sign In
-      </NavItem>
-    </div>
+    <NavItem>
+      <Icon className="fa fa-user-circle" />
+      Sign In
+    </NavItem>
   );
 }
 

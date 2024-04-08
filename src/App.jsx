@@ -10,7 +10,7 @@ import AppLayout from "./ui/AppLayout";
 
 const router = createBrowserRouter([
   {
-    element: <AppLayout />,
+    element: <AppLayout />, // Layout Route
     children: [
       { path: "/", element: <Home /> },
       { path: "/login", element: <SignIn /> },
