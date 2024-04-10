@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useLoaderData } from "react-router-dom";
+// import { useRouteError } from "react-router-dom";
 import Account from "./Account";
 
 const Main = styled.main`
@@ -35,6 +36,7 @@ const H2 = styled.h2`
 function Profil() {
   const token = useLoaderData();
   console.log(token);
+  // const error = useRouteError();
   return (
     <Main>
       <Header>
@@ -43,6 +45,7 @@ function Profil() {
           <br />
           Tony Jarvis!
         </H1>
+        {/* <p>{error.message}</p> */}
         <EditBtn>Edit Name</EditBtn>
       </Header>
       <H2>Accounts</H2>

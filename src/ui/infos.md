@@ -1,0 +1,1 @@
+Le répertoire ui est dédié aux composants réutilisables et aux styles de votre application. Vous pouvez y placer des composants d'interface utilisateur (comme des boutons, des formulaires, des cartes, des modales, etc.) ainsi que des styles globaux ou des thèmes. Organisez ce répertoire de manière à ce que les composants soient faciles à réutiliser et à comprendre.

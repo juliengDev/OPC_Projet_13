@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -38,6 +39,10 @@ const Input = styled.input`
   // .input-wrapper input
   padding: 5px;
   font-size: 1.2rem;
+  &::placeholder {
+    color: grey;
+    font-size: 0.7em;
+  }
 `;
 
 const InputRemember = styled.div`
@@ -67,26 +72,50 @@ const SignInBtn = styled.span`
   }
 `;
 function SignIn() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!username) return;
+    console.log(username);
+    setUsername("");
+  }
+
   return (
     <Main>
       <SectionSignIn>
         <Icon className="fa fa-user-circle" />
         <h1>Sign In</h1>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <InputWrapper>
             <Label htmlFor="username">Username</Label>
-            <Input type="text" id="username" />
+            <Input // controlled element
+              placeholder="Adresse email"
+              type="text"
+              id="username"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </InputWrapper>
           <InputWrapper>
             <Label htmlFor="password">Password</Label>
-            <Input type="text" id="password" />
+            <Input
+              placeholder="Mot de passe"
+              type="text"
+              id="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </InputWrapper>
           <InputRemember>
             <input type="checkbox" id="remember-me" />
             <LabelRemember htmlFor="remember-me">Remember me</LabelRemember>
           </InputRemember>
-          <Link to="/profile/:userId">
+          <Link to={`/profile/${username}`}>
             <SignInBtn>Sign in</SignInBtn>
           </Link>
         </form>

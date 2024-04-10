@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import argentBankLogo from "/src/assets/img/argentBankLogo.png";
 const LogoImg = styled.img`
   // class="main-nav-logo-image"
   max-width: 100%;
@@ -44,10 +44,7 @@ const Icon = styled.i`
 function Logo() {
   return (
     <>
-      <LogoImg
-        src="./src/assets/img/argentBankLogo.png"
-        alt="Argent Bank Logo"
-      />
+      <LogoImg src={argentBankLogo} alt="Argent Bank Logo" />
       <LogoName>Argent Bank</LogoName>
     </>
   );
