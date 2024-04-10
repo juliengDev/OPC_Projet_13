@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useLoaderData } from "react-router-dom";
-// import { useRouteError } from "react-router-dom";
 import Account from "./Account";
+// import { useLoaderData } from "react-router-dom";
+// import { useRouteError } from "react-router-dom";
 
 const Main = styled.main`
   // .main .bg-dark
@@ -34,8 +34,8 @@ const H2 = styled.h2`
 `;
 
 function Profil() {
-  const token = useLoaderData();
-  console.log(token);
+  // const token = useLoaderData();
+  // console.log(token);
   // const error = useRouteError();
   return (
     <Main>

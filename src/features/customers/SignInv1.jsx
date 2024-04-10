@@ -1,8 +1,4 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-
-import { useDispatch } from "react-redux";
-import { getAccount } from "./customerSlice";
+import { Form } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -59,7 +55,7 @@ const LabelRemember = styled.label`
   margin-left: 0.25rem;
 `;
 
-const SignInBtn = styled.span`
+const SignInBtn = styled.button`
   // .sign-in-button
   display: block;
   width: 100%;
@@ -76,55 +72,39 @@ const SignInBtn = styled.span`
   }
 `;
 function SignIn() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(username, password);
-    if (!username && !password) return;
-    dispatch(getAccount(username, password));
-    setUsername("");
-  }
-
   return (
     <Main>
       <SectionSignIn>
         <Icon className="fa fa-user-circle" />
         <h1>Sign In</h1>
 
-        <form onSubmit={handleSubmit}>
+        <Form method="POST">
           <InputWrapper>
-            <Label htmlFor="username">Username</Label>
-            <Input // controlled element
+            <Label>Username</Label>
+            <Input
               placeholder="Adresse email"
               type="text"
-              id="username"
+              name="email"
+              id="email"
               required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
             />
           </InputWrapper>
           <InputWrapper>
-            <Label htmlFor="password">Password</Label>
+            <Label>Password</Label>
             <Input
               placeholder="Mot de passe"
               type="text"
               id="password"
+              name="password"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
             />
           </InputWrapper>
           <InputRemember>
             <input type="checkbox" id="remember-me" />
-            <LabelRemember htmlFor="remember-me">Remember me</LabelRemember>
+            <LabelRemember>Remember me</LabelRemember>
           </InputRemember>
-          <Link to={`/profile/${username}`}>
-            <SignInBtn>Sign in</SignInBtn>
-          </Link>
-        </form>
+          <SignInBtn>Sign in</SignInBtn>
+        </Form>
       </SectionSignIn>
     </Main>
   );

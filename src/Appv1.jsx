@@ -1,13 +1,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+import AppLayout from "./ui/AppLayout";
+import Error from "./ui/Error.jsx";
 import Home from "./features/homepage/Home";
 import SignIn from "./features/customers/SignInv1.jsx";
 import { action as customerLoginAction } from "./features/customers/customerLogin.js";
-import signInLoader from "./features/customers/signInLoader.js";
-
 import Profil from "./features/accounts/Profil.jsx";
-import AppLayout from "./ui/AppLayout";
-import Error from "./ui/Error.jsx";
 import AccountDetails from "./features/accounts/AccountDetails.jsx";
 
 // Modern way to load or submit by fetching data (dataLoader, dataActions, dataFetcher)
@@ -26,8 +24,6 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId",
         element: <Profil />,
-        loader: signInLoader,
-
         errorElement: <Error />,
       },
       {

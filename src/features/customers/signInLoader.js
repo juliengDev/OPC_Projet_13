@@ -1,4 +1,4 @@
-import { getToken } from "../../services/apiUser";
+import { getToken } from "../../services/apiCustomer";
 
 // Render as you fetch method here with a loader function use by React Router Dom:
 
