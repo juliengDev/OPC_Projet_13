@@ -60,7 +60,7 @@ const CtaBtn = styled.button`
   // .transaction-button
   display: block;
   width: 100%;
-  padding: 8px;
+  padding: 0.5em;
   font-size: 1.1rem;
   font-weight: bold;
   margin-top: 1rem;

@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import Account from "./Account";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import EditAccount from "./EditAccount";
 // import { useLoaderData } from "react-router-dom";
 // import { useRouteError } from "react-router-dom";
 
@@ -37,16 +40,29 @@ function Profil() {
   // const token = useLoaderData();
   // console.log(token);
   // const error = useRouteError();
+
+  const customer = useSelector((store) => store.customer);
+  console.log(customer);
+  const { firstName, lastName } = customer;
+  const [displayEditName, setDisplayEditName] = useState(false);
+
   return (
     <Main>
       <Header>
         <H1>
           Welcome back
-          <br />
-          Tony Jarvis!
+          {!displayEditName && <br />}
+          {!displayEditName && `${firstName} ${lastName}`}
         </H1>
         {/* <p>{error.message}</p> */}
-        <EditBtn>Edit Name</EditBtn>
+        {!displayEditName && (
+          <EditBtn onClick={() => setDisplayEditName(!displayEditName)}>
+            Edit Name
+          </EditBtn>
+        )}
+        {displayEditName && (
+          <EditAccount firstName={firstName} lastName={lastName} />
+        )}
       </Header>
       <H2>Accounts</H2>
       <Account

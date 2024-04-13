@@ -4,7 +4,7 @@ import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error.jsx";
 import Home from "./features/homepage/Home";
 import SignIn from "./features/customers/SignInv1.jsx";
-import { action as customerLoginAction } from "./features/customers/customerLogin.js";
+import { action as customerLoginAction } from "./features/customers/customerLoginAction.js";
 import Profil from "./features/accounts/Profil.jsx";
 import AccountDetails from "./features/accounts/AccountDetails.jsx";
 

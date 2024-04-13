@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigation, useActionData } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -7,6 +7,7 @@ const Main = styled.main`
 
   flex: 1;
   background-color: #12002b;
+  overflow: scroll;
 `;
 
 const SectionSignIn = styled.section`
@@ -38,11 +39,16 @@ const Label = styled.label`
 const Input = styled.input`
   // .input-wrapper input
   padding: 5px;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   &::placeholder {
     color: grey;
-    font-size: 0.7em;
+    font-size: 0.8rem;
   }
+`;
+const InputError = styled.p`
+  font-size: 0.9rem;
+  color: red;
+  margin-bottom: 1rem;
 `;
 
 const InputRemember = styled.div`
@@ -67,11 +73,18 @@ const SignInBtn = styled.button`
   background-color: #00bc77;
   color: #fff;
   text-decoration: underline;
+  border: none;
   &:hover {
     cursor: pointer;
   }
 `;
 function SignIn() {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
+  // error handling in form actions
+  const formErrors = useActionData();
+
   return (
     <Main>
       <SectionSignIn>
@@ -89,6 +102,7 @@ function SignIn() {
               required
             />
           </InputWrapper>
+          {formErrors?.email && <InputError>{formErrors.email}</InputError>}
           <InputWrapper>
             <Label>Password</Label>
             <Input
@@ -100,10 +114,12 @@ function SignIn() {
             />
           </InputWrapper>
           <InputRemember>
-            <input type="checkbox" id="remember-me" />
+            <input type="checkbox" id="remember-me" name="rememberMe" />
             <LabelRemember>Remember me</LabelRemember>
           </InputRemember>
-          <SignInBtn>Sign in</SignInBtn>
+          <SignInBtn disabled={isSubmitting}>
+            {isSubmitting ? "Signing in..." : "Sign in"}
+          </SignInBtn>
         </Form>
       </SectionSignIn>
     </Main>

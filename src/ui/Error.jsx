@@ -7,7 +7,6 @@ const ErrorContainer = styled.div`
 `;
 function Error() {
   const error = useRouteError();
-  console.log(error);
 
   return (
     <ErrorContainer>
