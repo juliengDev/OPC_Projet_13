@@ -7,7 +7,6 @@ import SignIn from "./features/customers/SignInv1.jsx";
 import { action as customerLoginAction } from "./features/customers/customerLoginAction.js";
 import Profil from "./features/accounts/Profil.jsx";
 import AccountDetails from "./features/accounts/AccountDetails.jsx";
-
 // Modern way to load or submit by fetching data (dataLoader, dataActions, dataFetcher)
 
 const router = createBrowserRouter([

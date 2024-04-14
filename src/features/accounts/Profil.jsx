@@ -3,6 +3,7 @@ import Account from "./Account";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import EditAccount from "./EditAccount";
+import { getCustomer } from "../customers/customerSlice";
 // import { useLoaderData } from "react-router-dom";
 // import { useRouteError } from "react-router-dom";
 
@@ -41,9 +42,11 @@ function Profil() {
   // console.log(token);
   // const error = useRouteError();
 
-  const customer = useSelector((store) => store.customer);
+  // selector function (redux recommend to do data manipulation here , can be a derive state for exemple). This function has to be import from the slice file.
+  const customer = useSelector(getCustomer);
   console.log(customer);
-  const { firstName, lastName } = customer;
+  const firstName = customer?.firstName;
+  const lastName = customer?.lastName;
   const [displayEditName, setDisplayEditName] = useState(false);
 
   return (

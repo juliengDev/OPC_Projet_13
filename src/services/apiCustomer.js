@@ -1,6 +1,6 @@
 const API_URL = "http://localhost:3001/api/v1";
 
-export async function getToken(userObj) {
+export async function getTokenData(userObj) {
   try {
     const res = await fetch(`${API_URL}/user/login`, {
       method: "POST",
@@ -27,7 +27,7 @@ export async function getToken(userObj) {
     throw new Error(err);
   }
 }
-export async function getCustomer(authToken) {
+export async function getCustomerData(authToken) {
   try {
     const res = await fetch(`${API_URL}/user/profile`, {
       method: "POST",

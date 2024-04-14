@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: false,
+  isLoggedIn: false,
   email: "",
   password: "",
   firstName: "",
@@ -17,15 +18,12 @@ const custormerSlice = createSlice({
   name: "customer",
   initialState,
   reducers: {
-    setToken(state, action) {
-      state.token = action.payload;
-      state.isLoading = true;
-    },
-    setAccount(state, action) {
+    setLoggedInUser(state, action) {
       return {
         ...state,
         ...action.payload,
         isLoading: false,
+        isLoggedIn: true,
       };
     },
     setRemember(state, action) {
@@ -37,19 +35,26 @@ const custormerSlice = createSlice({
     updateLastName(state, action) {
       state.lastName = action.payload;
     },
+    logout(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
 // old way of doing action creator
 // export function getUser(email, lastName) {
-//   return { type: "customer/setAccount", payload: { firstName, lastName } };
+//   return { type: "customer/setLoggedInUser", payload: { firstName, lastName } };
 // }
 
+//selector functions
+export const getCustomer = (state) => state.customer;
+
 export const {
-  setToken,
   setRemember,
-  setAccount,
+  setLoggedInUser,
   updateFirstName,
   updateLastName,
+  logout,
 } = custormerSlice.actions;
+
 export default custormerSlice.reducer;

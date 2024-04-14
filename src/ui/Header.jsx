@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 import argentBankLogo from "/src/assets/img/argentBankLogo.png";
+import { getCustomer, logout } from "../features/customers/customerSlice";
+
 const LogoImg = styled.img`
   // class="main-nav-logo-image"
   max-width: 100%;
@@ -27,6 +30,14 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 5px 20px;
+`;
+
+const SignContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin: 0 1rem;
 `;
 const NavItem = styled.div`
   // .main-nav a
@@ -59,15 +70,40 @@ function SignIn() {
   );
 }
 
+function SignOut({ onClick }) {
+  return (
+    <NavItem onClick={onClick}>
+      <Icon className="fa fa-sign-out-alt" />
+      Sign Out
+    </NavItem>
+  );
+}
+
 function Header() {
+  const customer = useSelector(getCustomer);
+  const id = customer?.id;
+  const dispatch = useDispatch();
+
+  function handleSignOut() {
+    dispatch(logout());
+  }
   return (
     <Nav>
       <Link to="/">
         <Logo />
       </Link>
-      <Link to="/login">
-        <SignIn />
-      </Link>
+      <SignContainer>
+        {!id && (
+          <Link to="/login">
+            <SignIn />
+          </Link>
+        )}
+        {id && (
+          <Link to="/">
+            <SignOut onClick={handleSignOut} />
+          </Link>
+        )}
+      </SignContainer>
     </Nav>
   );
 }
