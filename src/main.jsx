@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { Provider } from "react-redux";
-import App from "./Appv1.jsx";
+import App from "./Appv3.jsx";
 import store from "./store.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

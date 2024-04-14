@@ -1,9 +1,9 @@
-import { getCustomerData, getTokenData } from "../../services/apiCustomer";
+import { fetchCustomerData, fetchTokenData } from "../../services/apiCustomer";
 import store from "../../store";
 import { redirect } from "react-router-dom";
 import { isValidEmail } from "../../utils/regex";
 
-import { setLoggedInUser, setRemember } from "./customerSlice";
+import { setLoggedInUser } from "./customerSlice";
 
 export async function action({ request }) {
   // Retrieve the information collected when the form is submitted
@@ -21,17 +21,15 @@ export async function action({ request }) {
     return errors;
   }
 
-  // If the Remember box is ticked by the user, the state is updated with this information
-  if (remember) store.dispatch(setRemember(true));
-
   // If everything is ok
   // Response of the API CALL post user/login
-  const { token } = (await getTokenData(data)).body;
+  const { token } = (await fetchTokenData(data)).body;
   // Response of the API CALL post user/profile with the JTW token
-  const customer = (await getCustomerData(token)).body;
+  const customer = (await fetchCustomerData(token)).body;
 
   const newObj = {
     ...customer,
+    remember,
     token,
   };
   // update the global ui customer state by using the action creator function of the customer slice
