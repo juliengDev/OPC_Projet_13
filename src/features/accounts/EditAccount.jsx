@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-// import { Form } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCustomer } from "../customers/customerSlice";
+
 import styled from "styled-components";
 import { isValidName } from "../../utils/regex";
-import { updateFirstName, updateLastName } from "../customers/customerSlice";
 import { formatString } from "../../utils/helper";
+import { fetchCustomerUpdate } from "../customers/customerSlicev3";
+import Loader from "../../ui/Loader";
 
 const InputWrapper = styled.div`
   // .input-wrapper
@@ -42,12 +44,22 @@ const Btn = styled.button`
   font-size: 0.8em;
 `;
 
-function EditAccount({ firstName, lastName }) {
+function EditAccount({
+  firstName,
+  lastName,
+  setDisplayEditName,
+  displayEditName,
+}) {
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastname] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [updateCompleted, setUpdateCompleted] = useState(false);
+
+  const { token } = useSelector(getCustomer);
+
   const dispatch = useDispatch();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!newFirstName && !newLastName) return;
     if (
@@ -57,43 +69,62 @@ function EditAccount({ firstName, lastName }) {
       const formatedFirstname = formatString(newFirstName);
       const formatedLastname = formatString(newLastName);
 
-      console.log(formatedFirstname, formatedLastname);
+      const payload = {
+        firstName: formatedFirstname,
+        lastName: formatedLastname,
+      };
+      setIsSubmitting(true);
+      const data = {
+        payload,
+        token: token,
+      };
+      // console.log(payload);
+      try {
+        await dispatch(fetchCustomerUpdate(data));
+        setIsSubmitting(false);
+        setUpdateCompleted(true);
+      } catch (error) {
+        console.error("Error:", error);
+        setIsSubmitting(false);
+      }
 
-      dispatch(updateFirstName(formatedFirstname));
-      dispatch(updateLastName(formatedLastname));
+      setDisplayEditName(!displayEditName);
       setNewFirstName("");
       setNewLastname("");
     }
   }
   return (
-    // <Form method="POST">
-    <form>
-      <InputWrapper>
-        <Input
-          type="text"
-          name="firstname"
-          id="firstname"
-          value={newFirstName}
-          onChange={(e) => setNewFirstName(e.target.value)}
-          placeholder={firstName}
-          required
-        />
-        <Input
-          type="text"
-          name="lastname"
-          id="lastname"
-          value={newLastName}
-          onChange={(e) => setNewLastname(e.target.value)}
-          placeholder={lastName}
-          required
-        />
-      </InputWrapper>
-      <ButtonWrapper>
-        <Btn onClick={handleSubmit}>Save</Btn>
-        <Btn>Cancel</Btn>
-      </ButtonWrapper>
-    </form>
-    // </Form>
+    <>
+      {isSubmitting && <Loader />}
+      {!updateCompleted && (
+        <form onSubmit={handleSubmit}>
+          <InputWrapper>
+            <Input
+              type="text"
+              name="firstname"
+              id="firstname"
+              value={newFirstName}
+              onChange={(e) => setNewFirstName(e.target.value)}
+              placeholder={firstName}
+              required
+            />
+            <Input
+              type="text"
+              name="lastname"
+              id="lastname"
+              value={newLastName}
+              onChange={(e) => setNewLastname(e.target.value)}
+              placeholder={lastName}
+              required
+            />
+          </InputWrapper>
+          <ButtonWrapper>
+            <Btn type="submit">Save</Btn>
+            <Btn>Cancel</Btn>
+          </ButtonWrapper>
+        </form>
+      )}
+    </>
   );
 }
 

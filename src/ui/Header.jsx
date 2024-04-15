@@ -93,11 +93,10 @@ function Header() {
         <Logo />
       </Link>
       <SignContainer>
-        {!id && (
-          <Link to="/login">
-            <SignIn />
-          </Link>
-        )}
+        <Link to="/login">
+          <SignIn />
+        </Link>
+
         {id && (
           <Link to="/">
             <SignOut onClick={handleSignOut} />

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { fetchTokenData, fetchCustomerData, getToken } from "./customerSlicev3";
+import Loader from "../../ui/Loader";
 
 import store from "../../store";
 
@@ -82,8 +83,7 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [redirectToProfile, setRedirectToProfile] = useState(false);
-  const [customer, setCustomer] = useState(null);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -102,68 +102,65 @@ function SignIn() {
       // Now dispatch the fetchCustomerData action with the token
       const obj = await dispatch(fetchCustomerData(token));
       const newObj = obj.payload;
-      setCustomer({ ...newObj, isChecked, token });
-
+      const customer = { ...newObj, isChecked, token };
       setIsSubmitting(false);
-      setRedirectToProfile(true);
 
       // At this point, both API calls are completed successfully
-      // You can handle any further logic here if needed
+      // We redirect the user to his profil page
+      navigate(`/profile/${customer.id}`);
     } catch (error) {
       console.error("Error:", error);
       setIsSubmitting(false);
-      // Handle errors if necessary
     }
   }
 
-  if (redirectToProfile && customer) {
-    navigate(`/profile/${customer.id}`);
-  }
-
   return (
-    <Main>
-      <SectionSignIn>
-        <Icon className="fa fa-user-circle" />
-        <h1>Sign In</h1>
+    <>
+      {isSubmitting && <Loader />}
+      <Main>
+        <SectionSignIn>
+          <Icon className="fa fa-user-circle" />
+          <h1>Sign In</h1>
 
-        <form onSubmit={handleSubmit}>
-          <InputWrapper>
-            <Label>Username</Label>
-            <Input
-              type="text"
-              placeholder="Adresse email"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </InputWrapper>
+          <form onSubmit={handleSubmit}>
+            <InputWrapper>
+              <Label>Username</Label>
+              <Input
+                type="text"
+                placeholder="Adresse email"
+                value={email}
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </InputWrapper>
 
-          <InputWrapper>
-            <Label>Password</Label>
-            <Input
-              type="password"
-              placeholder="Mot de passe"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </InputWrapper>
-          <InputRemember>
-            <input
-              type="checkbox"
-              id="remember-me"
-              name="remember-me"
-              value={isChecked}
-              onChange={(e) => setIsChecked(e.target.checked)}
-            />
-            <LabelRemember htmlFor="remember-me">Remember me</LabelRemember>
-          </InputRemember>
-          <SignInBtn type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Signing in..." : "Sign in"}
-          </SignInBtn>
-        </form>
-      </SectionSignIn>
-    </Main>
+            <InputWrapper>
+              <Label>Password</Label>
+              <Input
+                type="password"
+                placeholder="Mot de passe"
+                value={password}
+                required
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </InputWrapper>
+            <InputRemember>
+              <input
+                type="checkbox"
+                id="remember-me"
+                name="remember-me"
+                value={isChecked}
+                onChange={(e) => setIsChecked(e.target.checked)}
+              />
+              <LabelRemember htmlFor="remember-me">Remember me</LabelRemember>
+            </InputRemember>
+            <SignInBtn type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Signing in..." : "Sign in"}
+            </SignInBtn>
+          </form>
+        </SectionSignIn>
+      </Main>
+    </>
   );
 }
 

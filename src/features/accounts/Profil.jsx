@@ -44,7 +44,6 @@ function Profil() {
 
   // selector function (redux recommend to do data manipulation here , can be a derive state for exemple). This function has to be import from the slice file.
   const customer = useSelector(getCustomer);
-  console.log(customer);
   const firstName = customer?.firstName;
   const lastName = customer?.lastName;
   const [displayEditName, setDisplayEditName] = useState(false);
@@ -64,7 +63,12 @@ function Profil() {
           </EditBtn>
         )}
         {displayEditName && (
-          <EditAccount firstName={firstName} lastName={lastName} />
+          <EditAccount
+            firstName={firstName}
+            lastName={lastName}
+            setDisplayEditName={setDisplayEditName}
+            displayEditName={displayEditName}
+          />
         )}
       </Header>
       <H2>Accounts</H2>

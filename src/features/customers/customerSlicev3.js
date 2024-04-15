@@ -41,7 +41,6 @@ export const fetchCustomerData = createAsyncThunk(
     try {
       const res = await fetch(`${API_URL}/user/profile`, {
         method: "POST",
-
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`, // Ajoute le token d'autorisation dans les headers
@@ -61,6 +60,40 @@ export const fetchCustomerData = createAsyncThunk(
           );
       }
       const customer = data.body;
+      if (data.status === 200) return customer;
+    } catch (err) {
+      throw new Error(`Error recovering your profile : ${err.message}`);
+    }
+  }
+);
+
+export const fetchCustomerUpdate = createAsyncThunk(
+  "customer/fetchCustomerUpdate",
+  async function (data) {
+    const { token, payload } = data;
+    try {
+      const res = await fetch(`${API_URL}/user/profile`, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Ajoute le token d'autorisation dans les headers
+        },
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        if (data.status === 400)
+          throw new Error(
+            "Authentication failed. Please check your credentials and try again."
+          );
+        if (data.status === 500)
+          throw new Error(
+            "Oops! Something went wrong on our end. Please try again later."
+          );
+      }
+      const customer = data.body;
+      // console.log(customer);
       if (data.status === 200) return customer;
     } catch (err) {
       throw new Error(`Error recovering your profile : ${err.message}`);
@@ -88,22 +121,6 @@ const custormerSlice = createSlice({
   name: "customer",
   initialState,
   reducers: {
-    setLoggedInUser(state, action) {
-      return {
-        ...state,
-        ...action.payload,
-        isLoggedIn: true,
-      };
-    },
-    setRemember(state, action) {
-      state.remember = action.payload;
-    },
-    updateFirstName(state, action) {
-      state.firstName = action.payload;
-    },
-    updateLastName(state, action) {
-      state.lastName = action.payload;
-    },
     logout(state) {
       Object.assign(state, initialState);
     },
@@ -137,6 +154,23 @@ const custormerSlice = createSlice({
         };
       })
       .addCase(fetchCustomerData.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message;
+      })
+      .addCase(fetchCustomerUpdate.pending, (state) => {
+        state.status = "loading";
+        state.isLoading = true;
+      })
+      .addCase(fetchCustomerUpdate.fulfilled, (state, action) => {
+        return {
+          ...state,
+          ...action.payload,
+          isLoading: false,
+          isLoggedIn: true,
+          status: "idle",
+        };
+      })
+      .addCase(fetchCustomerUpdate.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message;
       }),
