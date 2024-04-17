@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import custormerSlice from "./features/customers/customerSlicev3";
+import custormerSlice from "./features/customers/customerSlice";
 
 const store = configureStore({
   reducer: {

@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import EditAccount from "./EditAccount";
 import { getCustomer } from "../customers/customerSlice";
-// import { useLoaderData } from "react-router-dom";
-// import { useRouteError } from "react-router-dom";
+
 
 const Main = styled.main`
   // .main .bg-dark

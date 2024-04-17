@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCustomer } from "../customers/customerSlice";
-
 import styled from "styled-components";
+
 import { isValidName } from "../../utils/regex";
 import { formatString } from "../../utils/helper";
-import { fetchCustomerUpdate } from "../customers/customerSlicev3";
+import { getCustomer } from "../customers/customerSlice";
+import { fetchCustomerUpdate } from "../../services/apiCustomer";
 import Loader from "../../ui/Loader";
 
 const InputWrapper = styled.div`

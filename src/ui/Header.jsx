@@ -64,7 +64,7 @@ function Logo() {
 function SignIn() {
   return (
     <NavItem>
-      <Icon className="fa fa-user-circle" />
+      <Icon className="fa fa-user-circle fa-lg" />
       Sign In
     </NavItem>
   );
@@ -73,8 +73,17 @@ function SignIn() {
 function SignOut({ onClick }) {
   return (
     <NavItem onClick={onClick}>
-      <Icon className="fa fa-sign-out-alt" />
+      <Icon className="fa fa-sign-out-alt fa-lg" />
       Sign Out
+    </NavItem>
+  );
+}
+
+function Profil({ firstName }) {
+  return (
+    <NavItem>
+      <Icon className="fa fa-user-circle fa-lg" />
+      {firstName}
     </NavItem>
   );
 }
@@ -82,6 +91,7 @@ function SignOut({ onClick }) {
 function Header() {
   const customer = useSelector(getCustomer);
   const id = customer?.id;
+  const firstName = customer?.firstName;
   const dispatch = useDispatch();
 
   function handleSignOut() {
@@ -93,10 +103,17 @@ function Header() {
         <Logo />
       </Link>
       <SignContainer>
-        <Link to="/login">
-          <SignIn />
-        </Link>
+        {!id && (
+          <Link to="/login">
+            <SignIn />
+          </Link>
+        )}
 
+        {id && (
+          <Link to={`/profile/${id}`}>
+            <Profil firstName={firstName} />
+          </Link>
+        )}
         {id && (
           <Link to="/">
             <SignOut onClick={handleSignOut} />
