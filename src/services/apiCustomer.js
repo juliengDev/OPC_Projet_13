@@ -30,7 +30,7 @@ export const fetchTokenData = createAsyncThunk(
 
       if (data.status === 200) return token;
     } catch (err) {
-      throw new Error(`Error recovering your profile: ${err.message}`);
+      throw new Error(`Error : ${err.message}`);
     }
   }
 );

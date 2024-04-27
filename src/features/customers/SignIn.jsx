@@ -1,12 +1,16 @@
-import { useState } from "react";
+import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
-import { getToken } from "./customerSlice";
-import { fetchTokenData, fetchCustomerData } from "../../services/apiCustomer";
+import { useSelector } from "react-redux";
+import { getError, getToken } from "./customerSlice";
+import { fetchTokenData } from "../../services/apiCustomer";
+import { resetStatus } from "../customers/customerSlice";
+import { fetchCustomerData } from "../../services/apiCustomer";
 import Loader from "../../ui/Loader";
 
 import store from "../../store";
+import Error from "../../ui/Error";
 
 const Main = styled.main`
   // .main .bg-dark
@@ -84,9 +88,20 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [isErrorMsg, setIsErrorMsg] = useState(false);
+  const [error, setError] = useState("");
+  const status = useSelector((state) => state.customer.status);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (status === "error") {
+      setIsErrorMsg(true);
+      const errorInfo = getError(store.getState());
+      setError(errorInfo);
+      dispatch(resetStatus());
+    }
+  }, [status, dispatch]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -97,11 +112,12 @@ function SignIn() {
       // Dispatch the fetchTokenData action
       await dispatch(fetchTokenData(payload));
 
-      // After the token is fetched, get it from the state
+      // After the token is fetched successfully, get it from the state
       const token = getToken(store.getState());
-
+      if (!token) return;
       // Now dispatch the fetchCustomerData action with the token
       const obj = await dispatch(fetchCustomerData(token));
+
       const newObj = obj.payload;
       const customer = { ...newObj, isChecked, token };
       setIsSubmitting(false);
@@ -110,57 +126,67 @@ function SignIn() {
       // We redirect the user to his profil page
       navigate(`/profile/${customer.id}`);
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
       setIsSubmitting(false);
     }
   }
 
   return (
     <>
-      {isSubmitting && <Loader />}
-      <Main>
-        <SectionSignIn>
-          <Icon className="fa fa-user-circle" />
-          <h1>Sign In</h1>
+      {isErrorMsg ? (
+        <Error errorMsg={error} />
+      ) : (
+        <>
+          {isSubmitting && <Loader />}
+          <Main>
+            <SectionSignIn>
+              <Icon className="fa fa-user-circle" />
+              <h1>Sign In</h1>
 
-          <form onSubmit={handleSubmit}>
-            <InputWrapper>
-              <Label>Username</Label>
-              <Input
-                type="text"
-                placeholder="Adresse email"
-                value={email}
-                required
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </InputWrapper>
+              <form onSubmit={handleSubmit}>
+                <InputWrapper>
+                  <Label>Username</Label>
+                  <Input
+                    type="text"
+                    placeholder="Email Address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </InputWrapper>
 
-            <InputWrapper>
-              <Label>Password</Label>
-              <Input
-                type="password"
-                placeholder="Mot de passe"
-                value={password}
-                required
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </InputWrapper>
-            <InputRemember>
-              <input
-                type="checkbox"
-                id="remember-me"
-                name="remember-me"
-                value={isChecked}
-                onChange={(e) => setIsChecked(e.target.checked)}
-              />
-              <LabelRemember htmlFor="remember-me">Remember me</LabelRemember>
-            </InputRemember>
-            <SignInBtn type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Signing in..." : "Sign in"}
-            </SignInBtn>
-          </form>
-        </SectionSignIn>
-      </Main>
+                <InputWrapper>
+                  <Label>Password</Label>
+                  <Input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </InputWrapper>
+
+                <InputRemember>
+                  <input
+                    type="checkbox"
+                    id="remember-me"
+                    name="remember-me"
+                    checked={isChecked}
+                    onChange={(e) => setIsChecked(e.target.checked)}
+                  />
+                  <LabelRemember htmlFor="remember-me">
+                    Remember me
+                  </LabelRemember>
+                </InputRemember>
+
+                <SignInBtn type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Signing in..." : "Sign in"}
+                </SignInBtn>
+              </form>
+            </SectionSignIn>
+          </Main>
+        </>
+      )}
     </>
   );
 }

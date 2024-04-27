@@ -3,15 +3,19 @@ import LinkButton from "./LinkButton";
 import styled from "styled-components";
 
 const ErrorContainer = styled.div`
-  margin-top: 10rem;
+  margin: 10rem;
 `;
-function Error() {
+const ErrorTxt = styled.p`
+  margin: 4rem 0;
+  font-size: 1.8rem;
+`;
+function Error({ errorMsg }) {
   const error = useRouteError();
 
   return (
     <ErrorContainer>
       <h1>Something went wrong 😢</h1>
-      <p>{error.data || error.message}</p>
+      <ErrorTxt>{error?.data || error?.message || errorMsg}</ErrorTxt>
       <LinkButton to="-1">&larr; Go Back</LinkButton>
     </ErrorContainer>
   );

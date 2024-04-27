@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: "/profile/account/:accountId",
+        path: "/profile/accounts/:accountId",
         element: <AccountDetails />,
       },
     ],

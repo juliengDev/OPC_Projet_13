@@ -17,7 +17,7 @@ const initialState = {
   id: "",
   token: "",
   remember: false,
-  status: "idle",
+  status: "",
   error: "",
 };
 
@@ -27,6 +27,10 @@ const custormerSlice = createSlice({
   reducers: {
     logout(state) {
       Object.assign(state, initialState);
+    },
+    resetStatus(state) {
+      state.status = "";
+      state.error = "";
     },
   },
   extraReducers: (builder) =>
@@ -42,6 +46,8 @@ const custormerSlice = createSlice({
       })
       .addCase(fetchTokenData.rejected, (state, action) => {
         state.status = "error";
+        state.isLoading = false;
+        state.token = "";
         state.error = action.error.message;
       })
       .addCase(fetchCustomerData.pending, (state) => {
@@ -83,13 +89,8 @@ const custormerSlice = createSlice({
 //selector functions
 export const getCustomer = (state) => state.customer;
 export const getToken = (state) => state.customer.token;
+export const getError = (state) => state.customer.error;
 
-export const {
-  setRemember,
-  setLoggedInUser,
-  updateFirstName,
-  updateLastName,
-  logout,
-} = custormerSlice.actions;
+export const { logout, resetStatus } = custormerSlice.actions;
 
 export default custormerSlice.reducer;
