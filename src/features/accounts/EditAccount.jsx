@@ -120,7 +120,14 @@ function EditAccount({
           </InputWrapper>
           <ButtonWrapper>
             <Btn type="submit">Save</Btn>
-            <Btn>Cancel</Btn>
+            <Btn
+              onClick={(e) => {
+                e.preventDefault();
+                setDisplayEditName(!displayEditName);
+              }}
+            >
+              Cancel
+            </Btn>
           </ButtonWrapper>
         </form>
       )}
