@@ -78,7 +78,6 @@ function EditAccount({
         payload,
         token: token,
       };
-      // console.log(payload);
       try {
         await dispatch(fetchCustomerUpdate(data));
         setIsSubmitting(false);

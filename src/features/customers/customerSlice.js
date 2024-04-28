@@ -32,6 +32,9 @@ const custormerSlice = createSlice({
       state.status = "";
       state.error = "";
     },
+    toggleRemember(state, action) {
+      state.remember = action.payload;
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -93,6 +96,6 @@ export const getError = (state) => state.customer.error;
 export const getStatus = (state) => state.customer.status;
 
 // Actions function create with Redux Toolkit
-export const { logout, resetStatus } = custormerSlice.actions;
+export const { logout, resetStatus, toggleRemember } = custormerSlice.actions;
 
 export default custormerSlice.reducer;

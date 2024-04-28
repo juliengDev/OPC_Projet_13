@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getError, getStatus, getToken } from "./customerSlice";
+import { getError, getStatus, getToken, toggleRemember } from "./customerSlice";
 import { fetchTokenData } from "../../services/apiCustomer";
 import { resetStatus } from "../customers/customerSlice";
 import { fetchCustomerData } from "../../services/apiCustomer";
@@ -100,6 +100,9 @@ function SignIn() {
       setError(errorMsg);
       dispatch(resetStatus());
     }
+  }, [status, errorMsg, dispatch]);
+
+  useEffect(() => {
     // This function will run whenever `token` changes
     if (token) {
       const fetchData = async () => {
@@ -109,11 +112,11 @@ function SignIn() {
           // Call fetchCustomerData with the token
           const obj = await dispatch(fetchCustomerData(token));
           const newObj = obj.payload;
-          const customer = { ...newObj, isChecked, token };
+
           setIsSubmitting(false);
 
           // Redirect the user to the profile page
-          navigate(`/profile/${customer.id}`);
+          navigate(`/profile/${newObj.id}`);
         } catch (error) {
           console.error(error);
           setIsSubmitting(false);
@@ -123,7 +126,7 @@ function SignIn() {
       // Call the function if the token has been successfully recovered
       fetchData();
     }
-  }, [token, dispatch, navigate, isChecked, status, errorMsg]);
+  }, [token, dispatch, navigate, isChecked]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -133,6 +136,7 @@ function SignIn() {
       const payload = { email, password };
       // Dispatch the fetchTokenData action with the formatted payload
       await dispatch(fetchTokenData(payload));
+      dispatch(toggleRemember(isChecked));
     } catch (error) {
       console.error(error);
       setIsSubmitting(false);
