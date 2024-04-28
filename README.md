@@ -16,7 +16,7 @@ En outre, une [documentation Swagger](https://app.swaggerhub.com/apis/JULIENGILB
 - Consulter les détails d'une transaction dans une vue dédiée ;
 - Ajouter, modifier ou supprimer des informations relatives à une transaction.
 
-Cette documentation Swagger fournit des fonctionnalités supplémentaires à l'utilisateur pour gérer efficacement ses transactions bancaires.
+Cette documentation Swagger fournit des fonctionnalités supplémentaires au développeur pour gérer efficacement les transactions bancaires des clients de l'application.
 
 ## ⚙️ Pré-requis
 
@@ -53,6 +53,8 @@ Si la version est differente, utiliser l’application [nvm](https://github.com/
 
 ### BackEnd
 
+Adresse du repo : https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API
+
 ```
 # Install dependencies
 npm install
@@ -81,7 +83,7 @@ npm run dev
 ## 🎯 Objectif de la Phase 1 : Authentification des Utilisateurs
 
 - Création de l'application web avec React et Redux pour gérer le state global.
-- Mise en place des fonctionnalités suivantes (voir les détails dans nos [modèles d'Issues GitHub)](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API/tree/master/.github/ISSUE_TEMPLATE) :
+- Mise en place des fonctionnalités suivantes (voir les détails dans les [modèles d'Issues GitHub)](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API/tree/master/.github/ISSUE_TEMPLATE) :
   - Affichage de la page d'accueil.
   - Implémentation du système de connexion utilisateur.
   - Gestion de la déconnexion utilisateur.
