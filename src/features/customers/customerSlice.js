@@ -86,11 +86,13 @@ const custormerSlice = createSlice({
       }),
 });
 
-//selector functions
+// Selector functions create with Redux ToolKit
 export const getCustomer = (state) => state.customer;
 export const getToken = (state) => state.customer.token;
 export const getError = (state) => state.customer.error;
+export const getStatus = (state) => state.customer.status;
 
+// Actions function create with Redux Toolkit
 export const { logout, resetStatus } = custormerSlice.actions;
 
 export default custormerSlice.reducer;
