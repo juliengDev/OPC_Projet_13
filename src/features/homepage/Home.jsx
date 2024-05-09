@@ -17,8 +17,9 @@ const Hero = styled.div`
 `;
 const HeroContent = styled.section`
   // .hero-content
-  position: relative;
+  position: absolute;
   top: 2rem;
+  right: 2rem;
   width: 200px;
   background: white;
   padding: 2rem;

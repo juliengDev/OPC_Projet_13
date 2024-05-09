@@ -102,6 +102,7 @@ function SignIn() {
     }
   }, [status, errorMsg, dispatch]);
 
+  // Data loading waterfall strategy (fetch on render approach)
   useEffect(() => {
     // This function will run whenever `token` changes
     if (token) {
@@ -126,7 +127,7 @@ function SignIn() {
       // Call the function if the token has been successfully recovered
       fetchData();
     }
-  }, [token, dispatch, navigate, isChecked]);
+  }, [token, dispatch, navigate]);
 
   async function handleSubmit(e) {
     e.preventDefault();
