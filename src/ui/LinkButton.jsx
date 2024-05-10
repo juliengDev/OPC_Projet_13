@@ -1,5 +1,7 @@
+import { useDispatch } from "react-redux";
 import { Link as RouteurLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { resetStatus } from "../features/customers/customerSlice";
 
 const sharedStyles = `
 font-size: 0.875rem;
@@ -33,8 +35,19 @@ const StyledLink = styled(RouteurLink)`
 `;
 function LinkButton({ children, to }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  if (to === "-1") return <Btn onClick={() => navigate(-1)}>{children}</Btn>;
+  if (to === "-1")
+    return (
+      <Btn
+        onClick={() => {
+          dispatch(resetStatus());
+          navigate(-1);
+        }}
+      >
+        {children}
+      </Btn>
+    );
   return <StyledLink to={to}>{children}</StyledLink>;
 }
 

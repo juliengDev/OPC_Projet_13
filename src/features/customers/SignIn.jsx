@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getError, getStatus, getToken, toggleRemember } from "./customerSlice";
-import { fetchTokenData } from "../../services/apiCustomer";
-import { resetStatus } from "../customers/customerSlice";
-import { fetchCustomerData } from "../../services/apiCustomer";
+import { getError, toggleRemember } from "./customerSlice";
+import { fetchTokenData, fetchCustomerData } from "../../services/apiCustomer";
 import Loader from "../../ui/Loader";
 import Error from "../../ui/Error";
 
@@ -84,70 +82,35 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isErrorMsg, setIsErrorMsg] = useState(false);
-  const [error, setError] = useState("");
-
-  const token = useSelector(getToken);
-  const status = useSelector(getStatus);
-  const errorMsg = useSelector(getError);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (status === "error") {
-      setIsErrorMsg(true);
-      setError(errorMsg);
-      dispatch(resetStatus());
-    }
-  }, [status, errorMsg, dispatch]);
-
-  // Data loading waterfall strategy (fetch on render approach)
-  useEffect(() => {
-    // This function will run whenever `token` changes
-    if (token) {
-      const fetchData = async () => {
-        try {
-          setIsSubmitting(true);
-
-          // Call fetchCustomerData with the token
-          const obj = await dispatch(fetchCustomerData(token));
-          const newObj = obj.payload;
-
-          setIsSubmitting(false);
-
-          // Redirect the user to the profile page
-          navigate(`/profile/${newObj.id}`);
-        } catch (error) {
-          console.error(error);
-          setIsSubmitting(false);
-        }
-      };
-
-      // Call the function if the token has been successfully recovered
-      fetchData();
-    }
-  }, [token, dispatch, navigate]);
+  const errorMsg = useSelector(getError);
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!email && !password) return;
+    dispatch(toggleRemember(isChecked));
     try {
       setIsSubmitting(true);
       const payload = { email, password };
       // Dispatch the fetchTokenData action with the formatted payload
-      await dispatch(fetchTokenData(payload));
-      dispatch(toggleRemember(isChecked));
+      const newToken = await dispatch(fetchTokenData(payload));
+      if (!newToken.payload) return;
+      const obj = await dispatch(fetchCustomerData(newToken.payload));
+      const newObj = obj.payload;
+      navigate(`/profile/${newObj.id}`);
     } catch (error) {
-      console.error(error);
+      console.error("Error: ", error);
       setIsSubmitting(false);
     }
   }
 
   return (
     <>
-      {isErrorMsg ? (
-        <Error errorMsg={error} />
+      {errorMsg ? (
+        <Error errorMsg={errorMsg} />
       ) : (
         <>
           {isSubmitting && <Loader />}
