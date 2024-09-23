@@ -6,6 +6,14 @@
 
 ## Application Bancaire Web avec authentification des utilisateurs
 
+[![React](https://img.shields.io/badge/React-v18.2.0-brightgreen)](https://fr.reactjs.org/)
+[![React router](https://img.shields.io/badge/React%20Router-v6.22.3-orange)](https://v5.reactrouter.com/web/guides/quick-start)
+[![React Redux](https://img.shields.io/badge/React%20Redux-v9.1.0-critical)](https://react-redux.js.org/)
+[![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-v2.2.3-blueviolet)](https://redux-toolkit.js.org/)
+[![Axios](https://img.shields.io/badge/Axios-v0.19.2-ff69b4)](https://axios-http.com/docs/intro)
+
+[![Styled Components](https://img.shields.io/badge/styled%20components-v6.1.8-pink)](https://styled-components.com/)
+
 ## 📝 Description
 
 Ce projet vise à développer une application web complète et responsive avec React afin de gérer l'authentification des utilisateurs dans un environnement bancaire. Nous utilisons comme base le [HTML statique et le CSS](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API/tree/master/designs) fournis pour les pages d'accueil, de connexion et de profil.
